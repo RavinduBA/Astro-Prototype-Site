@@ -1,10 +1,20 @@
 ---
-import Layout from '../layouts/Layout.astro';
+import {getCollection} from "astro:content"
 
-// Welcome to Astro! Wondering what to do next? Check out the Astro documentation at https://docs.astro.build
-// Don't want to use any of this? Delete everything in this file, the `assets`, `components`, and `layouts` directories, and start fresh.
+import Layout from "../layouts/Layout.astro"
+import FeaturedPost from "../components/FeaturedPost.astro"
+import PostList from "../components/PostList.astro"
+import CategoryList from "../components/CategoryList.astro"
+import Main from "../components/Main.astro"
+import H1 from "../components/H1.astro"
+
 ---
 
-<Layout>
-	
+<Layout title ="Rythm nation blog">
+    <Main>
+        <H1 text="Rhythm Nation "/>
+
+		
+       
+    </Main>
 </Layout>
