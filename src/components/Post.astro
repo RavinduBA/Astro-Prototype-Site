@@ -1,6 +1,6 @@
 ---
 import {type CollectionEntry} from "astro:content"
-
+import { Image } from "astro:assets";
 
 type Props = {
     post: CollectionEntry<"posts">
@@ -22,7 +22,7 @@ const { post } = Astro.props
         href={`/blog/${post.slug}`}
         
     >
-        <img
+        <Image
             src={post.data.image}
             alt={post.data.title}
             width={600}

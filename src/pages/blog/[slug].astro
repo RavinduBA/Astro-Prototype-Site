@@ -9,6 +9,8 @@ import {type CollectionEntry} from "astro:content"
 import H1 from "../../components/H1.astro";
 import Main from "../../components/Main.astro";
 import Layout from "../../layouts/Layout.astro";
+import '../../styles/markdown.css';
+import { Image } from "astro:assets";
 
 export const getStaticPaths = async () => {
     const posts = await getCollection("posts");
@@ -36,12 +38,16 @@ const { Content } = await post.render();    // Converts markdown to HTML
 <Layout title={post.data.title}>
     <Main>
         <H1 text={post.data.title}/>
-        <img
+        <Image
             src={post.data.image}
             alt={post.data.title}
             width={600}
             height={600 / 1.5}
             class="rounded-2xl shadow-xl mb-4 aspect-thumbnail object-cover"
         />
+        <div class="markdown-content">
+            <Content/>
+          </div>
+          
     </Main>
 </Layout>

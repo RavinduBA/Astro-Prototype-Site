@@ -13,10 +13,11 @@ const authorsCollection = defineCollection({
 
 // This defines a collection for blog posts.
 const postsCollection = defineCollection({
-    schema: z.object({
+    schema: ({ image }) =>
+    z.object({
             author: z.string(),
             date: z.string(),
-            image: z.string(),
+            image: image(),
             title: z.string(),
         }),
 });
