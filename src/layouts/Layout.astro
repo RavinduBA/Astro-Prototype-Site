@@ -2,13 +2,17 @@
 import Header from "../components/Header.astro";
 import "../styles/global.css";
 
-interface Props {
+interface Props {         // Props Interface
 	title: string;
-	description?: string;
+	description?: string; // description, image: Optional, with default values
 	image?: string;
 }
 
+//Destructuring Astro.props
 const { title, description= "A community of music producers and enthusiasts", image ="/images/band.jpg"}= Astro.props;
+
+// <slot />	Renders whatever is inside the layout (e.g., blog posts)
+// This allows other components or content to be injected into this layout 
 ---
 
 
@@ -26,7 +30,7 @@ const { title, description= "A community of music producers and enthusiasts", im
 	</head>
 	<body class="min-h-screen">
 		
-		<Header />
-		<slot />
+		<Header /> 
+		<slot />   
 	</body>
 </html>

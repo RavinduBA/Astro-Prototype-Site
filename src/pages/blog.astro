@@ -1,23 +1,24 @@
 ---
-import { getCollection } from 'astro:content';
+import { getCollection } from 'astro:content'; //This fetches all the content from your posts collection (which you defined in config.ts)
 import Layout from '../layouts/Layout.astro';
 import H1 from '../components/H1.astro';
 import Main from '../components/Main.astro';
+import PostList from '../components/PostList.astro';
 
-const posts = await getCollection('posts');
-console.log(posts); 
+const posts = await getCollection("posts"); //posts will be an array of post entries (including frontmatter and slug).
+
+// Astro page responsible for rendering  blog  page using layout and components.
 
 ---
+
 
 
 
 <Layout title ="Blog |Rythm nation ">
     <Main>
         <H1 text="Rhythm Nation Blog"/>
-        {posts.map(post=>(
-            <a href="/blog/${post.slug}">
-                <h2>{post.data.title}</h2>
-            </a>
+        {posts.map(post =>(              
+       <PostList posts={posts}/>
         ))}	
        
     </Main>

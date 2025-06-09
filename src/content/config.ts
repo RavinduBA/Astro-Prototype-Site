@@ -1,6 +1,8 @@
 import {z, defineCollection} from "astro:content"
-import {format} from "date-fns"
 
+// This file defines the content collections for an Astro project.
+
+// This defines a collection for authors.
 const authorsCollection = defineCollection({
     schema: ({image}) =>
         z.object({
@@ -9,21 +11,20 @@ const authorsCollection = defineCollection({
         }),
 })
 
+// This defines a collection for blog posts.
 const postsCollection = defineCollection({
-    schema: ({image}) =>
-        z.object({
+    schema: z.object({
             author: z.string(),
-            categories: z.array(z.string()),
-            date: z
-                .string()
-                .transform(str => format(new Date(str), "MMMM d, yyyy")),
-            featured: z.boolean().default(false),
-            image: image(),
+            date: z.string(),
+            image: z.string(),
             title: z.string(),
         }),
-})
+});
+
+//This object registers the collections.
+//The keys (authors, posts) must match the folder names inside your src/content directory.
 
 export const collections = {
     authors: authorsCollection,
-    posts: postsCollection, // this name should be match with the directory name (post)
-}
+    posts: postsCollection,  
+};

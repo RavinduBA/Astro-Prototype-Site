@@ -1,4 +1,6 @@
 ---
+//PostList.astro component is responsible for rendering a list of blog post previews in a responsive grid layout
+
 import type {CollectionEntry} from "astro:content"
 
 import Post from "./Post.astro"
@@ -11,7 +13,7 @@ const {posts} = Astro.props
 ---
 
 <div
-    class="grid grid-cols-2 gap-x-16 gap-y-32 max-md:grid-cols-1 max-sm:gap-y-14"
+    class="grid grid-cols-2 gap-x-16 gap-y-14 max-md:grid-cols-1 mb-24"
 >
     {posts.map(post => <Post post={post} />)}
 </div>

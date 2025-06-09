@@ -1,0 +1,47 @@
+---
+// [slug].astro file is a dynamic route page that renders an individual blog post based on its slug.
+// This file dynamically generates a blog post page like /blog/my-first-post.
+// Clean routing with no extra JavaScript needed
+
+
+import { getCollection} from "astro:content";
+import {type CollectionEntry} from "astro:content"
+import H1 from "../../components/H1.astro";
+import Main from "../../components/Main.astro";
+import Layout from "../../layouts/Layout.astro";
+
+export const getStaticPaths = async () => {
+    const posts = await getCollection("posts");
+    const paths = posts.map(post => {
+        return {
+            params: {
+                slug: post.slug
+            },
+            props: {
+                post
+            }
+        }
+    })
+    return paths;
+}
+
+type Props = {
+    post: CollectionEntry<"posts">
+}
+
+const { post } = Astro.props;
+const { Content } = await post.render();    // Converts markdown to HTML
+---
+
+<Layout title={post.data.title}>
+    <Main>
+        <H1 text={post.data.title}/>
+        <img
+            src={post.data.image}
+            alt={post.data.title}
+            width={600}
+            height={600 / 1.5}
+            class="rounded-2xl shadow-xl mb-4 aspect-thumbnail object-cover"
+        />
+    </Main>
+</Layout>
