@@ -1,0 +1,24 @@
+---
+import { getCollection } from 'astro:content';
+import Layout from '../layouts/Layout.astro';
+import H1 from '../components/H1.astro';
+import Main from '../components/Main.astro';
+
+const posts = await getCollection('posts');
+console.log(posts); 
+
+---
+
+
+
+<Layout title ="Blog |Rythm nation ">
+    <Main>
+        <H1 text="Rhythm Nation Blog"/>
+        {posts.map(post=>(
+            <a href="/blog/${post.slug}">
+                <h2>{post.data.title}</h2>
+            </a>
+        ))}	
+       
+    </Main>
+</Layout>

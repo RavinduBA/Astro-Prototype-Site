@@ -25,5 +25,5 @@ const postsCollection = defineCollection({
 
 export const collections = {
     authors: authorsCollection,
-    posts: postsCollection,
+    posts: postsCollection, // this name should be match with the directory name (post)
 }
