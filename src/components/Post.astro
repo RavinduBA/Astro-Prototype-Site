@@ -21,7 +21,7 @@ const { post } = Astro.props
 
 <article>
     <a
-        href={`${base}blog/${post.slug}`}
+        href={`${base}blog/${post.slug}/`}
         
     >
         <Image
@@ -35,7 +35,7 @@ const { post } = Astro.props
 
 
     <a
-        href={`${base}blog/${post.slug}`}
+        href={`${base}blog/${post.slug}/`}
         class="text-4xl text-zinc-900  font-semibold inline-block"
     >
         <h2>{post.data.title}</h2>
