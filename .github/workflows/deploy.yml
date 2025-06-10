@@ -1,77 +1,101 @@
-# .github/workflows/deploy.yml
+
+# This is a GitHub Actions workflow file that automates the process of:
+# 1. Testing your code
+# 2. Building your Astro site
+# 3. Deploying it to GitHub Pages
+# It runs every time you push code or create a pull request to the main branch
+
 name: Build and Deploy to GitHub Pages
 
+# TRIGGERS
 on:
   push:
-    branches: [ main ]
+    branches: [ main ]        # Run when code is pushed to main branch
   pull_request:
-    branches: [ main ]
+    branches: [ main ]        # Run when someone creates a PR to main branch
 
+# JOBS: The actual work to be done 
 jobs:
+  # JOB 1: Test and Build  (This job runs tests, builds the project, and prepares it for deployment)
   test-and-build:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-latest    # Use Ubuntu Linux virtual machine
     
     steps:
+    # STEP 1: Get the code from your repository
     - name: Checkout code
-      uses: actions/checkout@v4
+      uses: actions/checkout@v4  # Downloads your repo files to the runner
       
+    # STEP 2: Set up Node.js environment
     - name: Setup Node.js
       uses: actions/setup-node@v4
       with:
-        node-version: '18'
-        cache: 'npm'
+        node-version: '18'     
+        cache: 'npm'           # Cache npm dependencies for faster builds
         
+    # STEP 3: Install project dependencies
     - name: Install dependencies
-      run: npm ci
+      run: npm ci               # Clean install (faster than npm install)
       
+    # STEP 4: Run tests with custom failure threshold
     - name: Run tests with failure threshold
       run: |
-        # Run tests and capture output
+        # Run the test suite and save output to a file
+        # '|| true' prevents the step from failing immediately
         npm test > test_output.txt 2>&1 || true
         
-        # Extract failed test count from output
+        # Parse the test output to count failed tests
+        # Uses grep with regex to extract numbers from test results
         FAILED_TESTS=$(grep -oP '\d+(?= failed)' test_output.txt || echo "0")
         TOTAL_TESTS=$(grep -oP '\d+(?= \(57\))' test_output.txt || echo "57")
         
+        # Display the results for debugging
         echo "Failed tests: $FAILED_TESTS"
         echo "Total tests: $TOTAL_TESTS"
         
-        # Display test results
+        # Show the full test output
         cat test_output.txt
         
-        # Check if failed tests are less than 5
+        # QUALITY GATE: Only allow deployment if less than 5 tests fail
+        # This prevents broken code from being deployed to production
         if [ "$FAILED_TESTS" -ge 5 ]; then
           echo "❌ Too many tests failed ($FAILED_TESTS). Deployment cancelled."
           echo "Maximum allowed failures: 4"
-          exit 1
+          exit 1                # Stop the workflow with error
         else
           echo "✅ Test failures ($FAILED_TESTS) are within acceptable range. Proceeding with deployment."
         fi
       
+    # STEP 5: Build the Astro project for production
     - name: Build the project
-      run: npm run build
+      run: npm run build        # Creates optimized static files in ./dist folder
       
+    # STEP 6: Prepare build files for GitHub Pages
     - name: Upload build artifacts
       uses: actions/upload-pages-artifact@v3
       with:
-        path: ./dist
+        path: ./dist           # Upload the built files from dist folder
 
+  # JOB 2: Deploy to GitHub Pages (This job only runs after test-and-build succeeds)
   deploy:
-    needs: test-and-build
+    needs: test-and-build      # Wait for test-and-build to complete successfully
     runs-on: ubuntu-latest
     
-    # Only deploy on pushes to main (not PRs)
+    # CONDITIONAL DEPLOYMENT: Only deploy on main branch pushes (not PRs)
+    # This prevents accidental deployments from pull requests
     if: github.ref == 'refs/heads/main' && github.event_name == 'push'
     
+    # SECURITY: Required permissions for GitHub Pages deployment
     permissions:
-      pages: write
-      id-token: write
+      pages: write             # Permission to write to GitHub Pages
+      id-token: write          # Permission for authentication
       
+    # ENVIRONMENT: Specify deployment target
     environment:
-      name: github-pages
-      url: ${{ steps.deployment.outputs.page_url }}
+      name: github-pages       # Environment name (shows in GitHub UI)
+      url: ${{ steps.deployment.outputs.page_url }}  # Live site URL after deployment
       
     steps:
+    # STEP 1: Deploy the uploaded artifacts to GitHub Pages
     - name: Deploy to GitHub Pages
-      id: deployment
-      uses: actions/deploy-pages@v4
+      id: deployment           # Give this step an ID so we can reference its outputs
+      uses: actions/deploy-pages@v4  # Official GitHub Pages deployment action
