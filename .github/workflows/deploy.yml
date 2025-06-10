@@ -24,10 +24,29 @@ jobs:
     - name: Install dependencies
       run: npm ci
       
-    - name: Run tests (allow some failures)
+    - name: Run tests with failure threshold
       run: |
-        npm test || echo "Some tests failed, but continuing deployment for learning purposes"
-      continue-on-error: true
+        # Run tests and capture output
+        npm test > test_output.txt 2>&1 || true
+        
+        # Extract failed test count from output
+        FAILED_TESTS=$(grep -oP '\d+(?= failed)' test_output.txt || echo "0")
+        TOTAL_TESTS=$(grep -oP '\d+(?= \(57\))' test_output.txt || echo "57")
+        
+        echo "Failed tests: $FAILED_TESTS"
+        echo "Total tests: $TOTAL_TESTS"
+        
+        # Display test results
+        cat test_output.txt
+        
+        # Check if failed tests are less than 5
+        if [ "$FAILED_TESTS" -ge 5 ]; then
+          echo "❌ Too many tests failed ($FAILED_TESTS). Deployment cancelled."
+          echo "Maximum allowed failures: 4"
+          exit 1
+        else
+          echo "✅ Test failures ($FAILED_TESTS) are within acceptable range. Proceeding with deployment."
+        fi
       
     - name: Build the project
       run: npm run build
