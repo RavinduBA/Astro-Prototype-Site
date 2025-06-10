@@ -1,9 +1,9 @@
-# 🎵 Rhythm Nation Blog
+# 🎵 Rhythm Nation 
 
 
 A modern, dynamic music blog built with Astro that celebrates music culture, emerging artists, and the universal language of rhythm. Join our vibrant community and discover the heartbeat of contemporary music.
 
-> Note - Still under construction
+> Note - Web Appliaction is still under construction
 
 ## 🛠️ Built With
 
