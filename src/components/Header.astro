@@ -1,10 +1,10 @@
 ---
 import {Image} from "astro:assets"
-const base = import.meta.env.BASE_URL;
+const base = import.meta.env.BASE_URL.endsWith('/') ? import.meta.env.BASE_URL : import.meta.env.BASE_URL + '/';
 
 // Importing Astro's built-in Image component for optimized image handling (automatic resizing, formats, lazy loading, etc.).
 // This is the top navigation bar that appears on every page using the Layout.astro.
-// Links point to main pages of  site.
+// Links point to main pages of site.
 ---
 
 <header
@@ -19,12 +19,12 @@ const base = import.meta.env.BASE_URL;
             format="webp"
             class="rounded-2xl aspect-thumbnail object-cover"
         />
-
+        
         <p class="uppercase text-3xl text-zinc-900">blog</p>
     </a>
     <ul class="flex gap-x-8">
-        <li><a href="/Rythem-Nation-Astro-blog-site-/" class="text-teal-900 font-bold">Home</a></li>
-        <li><a href="/Rythem-Nation-Astro-blog-site-/about/" class="text-teal-900 font-bold">About</a></li>
-        <li><a href="/Rythem-Nation-Astro-blog-site-/blog/" class="text-teal-900 font-bold">Blog</a></li>
-      </ul>
+        <li><a href={`${base}`} class="text-teal-900 font-bold">Home</a></li>
+        <li><a href={`${base}about/`} class="text-teal-900 font-bold">About</a></li>
+        <li><a href={`${base}blog/`} class="text-teal-900 font-bold">Blog</a></li>
+    </ul>
 </header>
