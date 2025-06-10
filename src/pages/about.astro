@@ -1,0 +1,61 @@
+---
+import Layout from '../layouts/Layout.astro';
+import H1 from '../components/H1.astro';
+import Main from '../components/Main.astro';
+---
+
+<Layout title="About | Rhythm Nation">
+    <Main>
+        <H1 text="About Rhythm Nation"/>
+        
+        <div class="max-w-4xl mx-auto space-y-8 text-lg leading-relaxed">
+            <div class="bg-gradient-to-r from-teal-50 to-cyan-50 p-8 rounded-2xl shadow-lg">
+                <h2 class="text-3xl font-bold text-teal-900 mb-4">Welcome to the Beat</h2>
+                <p class="text-zinc-700">
+                    Rhythm Nation is more than just a music blog – it's a vibrant community where the heartbeat of music comes alive. 
+                    We're passionate about exploring the diverse landscapes of sound, from underground gems to mainstream anthems, 
+                    celebrating the artists who move us and the rhythms that unite us all.
+                </p>
+            </div>
+
+            <div class="grid md:grid-cols-2 gap-8">
+                <div class="bg-white p-6 rounded-xl shadow-md border border-teal-100">
+                    <h3 class="text-2xl font-semibold text-teal-800 mb-3">Our Mission</h3>
+                    <p class="text-zinc-600">
+                        To discover, share, and celebrate the universal language of music. We believe every genre, 
+                        every artist, and every song has a story worth telling and a rhythm worth feeling.
+                    </p>
+                </div>
+
+                <div class="bg-white p-6 rounded-xl shadow-md border border-teal-100">
+                    <h3 class="text-2xl font-semibold text-teal-800 mb-3">What We Cover</h3>
+                    <ul class="text-zinc-600 space-y-2">
+                        <li>• Album reviews and artist spotlights</li>
+                        <li>• Music production insights</li>
+                        <li>• Industry trends and analysis</li>
+                        <li>• Live performance coverage</li>
+                        <li>• Emerging artist features</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="bg-teal-900 text-white p-8 rounded-2xl">
+                <h3 class="text-2xl font-bold mb-4">Join the Nation</h3>
+                <p class="text-teal-100 mb-4">
+                    Music is a shared experience, and we're building a community where every voice matters. 
+                    Whether you're a casual listener, aspiring musician, or industry professional, 
+                    there's a place for you in our rhythm nation.
+                </p>
+                <p class="text-teal-200 font-medium">
+                    Together, we move to the same beat. Together, we are the Rhythm Nation.
+                </p>
+            </div>
+
+            <div class="text-center pt-8">
+                <p class="text-zinc-500 italic text-xl">
+                    "Music is the universal language of mankind" – Henry Wadsworth Longfellow
+                </p>
+            </div>
+        </div>
+    </Main>
+</Layout>
